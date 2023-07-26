@@ -31,6 +31,7 @@ app.MapPost("/roomstats", async ([FromBody] RoomStats stats) =>
 {
     try
     {
+        stats.CreatedAt = DateTime.Now;
         await Task.Run(() => RoomStatistics.Add(stats));
         Results.Ok(stats);  
     }
