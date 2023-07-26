@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 25.0.1706.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33801.306
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempHumApi", "TempHumApi\TempHumApi.csproj", "{3E5FFBC4-BE99-40DC-A794-98F5D5BC2F92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TempHumApi", "TempHumApi\TempHumApi.csproj", "{3E5FFBC4-BE99-40DC-A794-98F5D5BC2F92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaspberryTemperatureHumidityApi", "RaspberryTemperatureHumidityApi\RaspberryTemperatureHumidityApi.csproj", "{EF66967B-C94D-46BB-9108-A8E02B8DA053}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3E5FFBC4-BE99-40DC-A794-98F5D5BC2F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E5FFBC4-BE99-40DC-A794-98F5D5BC2F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E5FFBC4-BE99-40DC-A794-98F5D5BC2F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF66967B-C94D-46BB-9108-A8E02B8DA053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF66967B-C94D-46BB-9108-A8E02B8DA053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF66967B-C94D-46BB-9108-A8E02B8DA053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF66967B-C94D-46BB-9108-A8E02B8DA053}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
