@@ -24,7 +24,4 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - name: Push the Docker Image
-      uses: docker/build-push-action@v4
-      with:
-        push: true
-        tags: mcopjan/raspberry-hum-temp-agent:latest
+      run: docker push mcopjan/raspberry-hum-temp-agent:latest
