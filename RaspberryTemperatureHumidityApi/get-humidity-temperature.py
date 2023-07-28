@@ -9,7 +9,7 @@ pin = sys.argv[3]
 roomName = sys.argv[4]
 intervalInSec = sys.argv[5]
 
-  #sudo python3 send_post.py 192.168.5.199:5144 11 17 homeOffice 10
+#sudo python3 send_post.py 192.168.5.199:5144 11 17 homeOffice 10
 
 while True:
     try:
@@ -27,7 +27,6 @@ while True:
         print("Reading from DHT failure: ", e.args)
 
     time.sleep(int(intervalInSec))
-
 
 
 

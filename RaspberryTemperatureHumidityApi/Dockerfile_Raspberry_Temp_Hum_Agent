@@ -1,0 +1,17 @@
+FROM python:3.8-alpine
+WORKDIR app
+COPY get-humidity-temperature.py .
+RUN apk update && apk add bash && apk add --no-cache git && apk add python3-dev \
+                        gcc \
+                        libc-dev
+
+RUN pip3 install requests                        
+                            
+RUN git clone https://github.com/adafruit/Adafruit_Python_DHT.git                                             
+RUN cd ./Adafruit_Python_DHT && python3 setup.py install
+
+##RUN apk add bash
+##ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT python3 get-humidity-temperature.py 192.168.5.199:5144 11 17 fromDocker 10
+##replace with env vars
+##docker run --privileged temp-hum-agent:6
