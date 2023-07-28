@@ -7,7 +7,7 @@ ENV GPIO_PIN=17
 ENV ROOM_NAME=demo
 ENV INTERVAL_SEC=10
 
-COPY get-humidity-temperature.py .
+COPY ./RaspberryTemperatureHumidityApi/get-humidity-temperature.py .
 RUN apk update && apk add bash && apk add --no-cache git && apk add python3-dev \
                         gcc \
                         libc-dev
