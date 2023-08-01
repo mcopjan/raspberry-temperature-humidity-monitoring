@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Raspberry Agent Docker image
-      run: docker buildx build --platform linux/amd64,linux/arm/v7 . --file Dockerfile_Raspberry_Agent --tag mcopjan/raspberry-hum-temp-agent:latest
+      run: docker build . --file Dockerfile_Raspberry_Agent --tag mcopjan/raspberry-hum-temp-agent:latest
       
     - uses: actions/checkout@v3
     - name: Build the Api Docker image
