@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             xmlns:vms="clr-namespace:TemperatureHumidityClient;assembly=TemperatureHumidityClient"
+             x:Class="TemperatureHumidityClient.MainPage">
+
+
+
+    <ContentPage.BindingContext>
+        <vms:ViewModel/>
+    </ContentPage.BindingContext>
+    <lvc:CartesianChart
+        Series="{Binding Series}" SyncContext="{Binding Sync}" XAxes="{Binding XAxes}">
+    </lvc:CartesianChart>
+    <!--<Button Text="Click to refresh"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="OnButtonClicked" />-->
+
+</ContentPage>
