@@ -27,7 +27,3 @@ while True:
         print("Reading from DHT failure: ", e.args)
 
     time.sleep(int(intervalInSec))
-
-
-
-
