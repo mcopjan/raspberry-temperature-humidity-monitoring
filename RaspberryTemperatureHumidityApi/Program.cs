@@ -19,18 +19,32 @@ if (app.Environment.IsDevelopment())
 }
 
 ConcurrentBag<RoomStats> RoomStatistics = new ConcurrentBag<RoomStats>();
+ConcurrentBag<string> RoomNames = new ConcurrentBag<string>();
 
 
 app.MapGet("/roomstats", () =>
 {
     return RoomStatistics.ToList();
+    //return new List<RoomStats>() { new RoomStats { RoomName="room1",TemperatureUnit = TemperatureUnit.Celsius,Temperature=50,
+    //CreatedAt = DateTime.Now + TimeSpan.FromMinutes(2)}, new RoomStats { RoomName="room2",TemperatureUnit = TemperatureUnit.Celsius,Temperature=20,
+    //CreatedAt = DateTime.Now + TimeSpan.FromMinutes(2)}};
 })
 .WithName("GetRoomStats");
+
+app.MapGet("/roomnames", () =>
+{
+    return RoomNames.ToList();
+    //return new List<string>() { "room1","room2" };
+})
+.WithName("GetRoomNames");
 
 app.MapPost("/roomstats", async ([FromBody] RoomStats stats) =>
 {
     try
     {
+        if (RoomNames.All(r => !r.Equals(stats.RoomName)))
+            RoomNames.Add(stats.RoomName);  
+
         stats.CreatedAt = DateTime.Now;
         await Task.Run(() => RoomStatistics.Add(stats));
         Results.Ok(stats);  

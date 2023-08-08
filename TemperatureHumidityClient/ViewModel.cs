@@ -18,7 +18,7 @@ public partial class ViewModel
     {
         Series.Add(new ColumnSeries<DateTimePoint>
         {
-            TooltipLabelFormatter = (chartPoint) =>$"{new DateTime((long) chartPoint.SecondaryValue):MMMM dd}: {chartPoint.PrimaryValue}",
+            TooltipLabelFormatter = (chartPoint) =>$"{new DateTime((long) chartPoint.SecondaryValue):MMMM dd tt mm}: {chartPoint.PrimaryValue}",
             Values = temperatureData,
         });
 
