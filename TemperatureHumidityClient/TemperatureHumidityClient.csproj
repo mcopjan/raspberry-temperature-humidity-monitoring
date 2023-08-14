@@ -57,4 +57,16 @@
 		<PackageReference Include="NUnit" Version="3.13.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="InitialPage.xaml.cs">
+	    <DependentUpon>InitialPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="InitialPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
