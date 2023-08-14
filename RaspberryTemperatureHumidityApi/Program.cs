@@ -22,12 +22,9 @@ ConcurrentBag<RoomStats> RoomStatistics = new ConcurrentBag<RoomStats>();
 ConcurrentBag<string> RoomNames = new ConcurrentBag<string>();
 
 
-app.MapGet("/roomstats", () =>
+app.MapGet("/roomstats/{roomName}", (string roomName) =>
 {
-    return RoomStatistics.ToList();
-    //return new List<RoomStats>() { new RoomStats { RoomName="room1",TemperatureUnit = TemperatureUnit.Celsius,Temperature=50,
-    //CreatedAt = DateTime.Now + TimeSpan.FromMinutes(2)}, new RoomStats { RoomName="room2",TemperatureUnit = TemperatureUnit.Celsius,Temperature=20,
-    //CreatedAt = DateTime.Now + TimeSpan.FromMinutes(2)}};
+    return RoomStatistics.Where(r=>r.RoomName.Equals(roomName)).ToList();
 })
 .WithName("GetRoomStats");
 

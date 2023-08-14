@@ -23,12 +23,9 @@ namespace TemperatureHumidityClient
 
         public static async Task<List<string>> GetRoomNames()
         {
-            //var response = await _client.GetAsync("http://localhost:5000/roomnames");
-            //var str = await response.Content.ReadAsStringAsync();
-            //return JsonConvert.DeserializeObject<List<string>>(str);
-
-            return new List<string>(){ "room1", "room2"};   
-
+            var response = await _client.GetAsync("http://192.168.5.136/roomnames");
+            var str = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<string>>(str);
         }
     }
 }
