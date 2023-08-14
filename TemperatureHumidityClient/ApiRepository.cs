@@ -13,11 +13,13 @@ namespace TemperatureHumidityClient
     {
         private static HttpClient _client = new HttpClient();
 
-        public static async Task<List<RoomStats>> GetRoomStats()
+        public static async Task<List<RoomStats>> GetRoomStats(string roomName)
         {
-            var response = await _client.GetAsync("http://192.168.5.136/roomstats");
+            var response = await _client.GetAsync($"http://192.168.5.136/roomstats/{roomName}");
             var str = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<RoomStats>>(str);
+            var allStats = JsonConvert.DeserializeObject<List<RoomStats>>(str);
+            var roomStats = allStats.Where(s => s.RoomName.Equals(roomName)).ToList();
+            return roomStats;
 
         }
 

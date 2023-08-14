@@ -17,11 +17,13 @@ public partial class InitialPage : ContentPage
     {
         var names = await ApiRepository.GetRoomNames();
         roomNames = new ObservableCollection<string>(names);
+        MyListView.ItemsSource = names;
     }
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
         string s = (sender as Button).Text;
+        ViewModel.RoomName = s;
         await Navigation.PushAsync(new MainPage());
     }
 }

@@ -11,6 +11,7 @@ public partial class ViewModel
 {
     private ObservableCollection<DateTimePoint> temperatureData = new();
     private ObservableCollection<DateTimePoint> humidityData = new();
+    public static string RoomName;
     public ViewModel()
     {
         Series.Add(new ColumnSeries<DateTimePoint>
@@ -34,7 +35,7 @@ public partial class ViewModel
 
     async void FetchDataAsync()
     {
-        var data = await ApiRepository.GetRoomStats();
+        var data = await ApiRepository.GetRoomStats(RoomName);
         lock (Sync)
         {
             foreach (var d in data)
