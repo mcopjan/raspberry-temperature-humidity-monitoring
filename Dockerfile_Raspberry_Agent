@@ -1,3 +1,6 @@
+
+##docker run --privileged -e API_URL={API_IP}:80 -e ROOM_NAME=luna mcopjan/raspberry-hum-temp-agent:latest
+
 FROM python:3.8-alpine
 WORKDIR app
 
@@ -17,8 +20,5 @@ RUN pip3 install requests
                             
 RUN git clone https://github.com/adafruit/Adafruit_Python_DHT.git                                             
 RUN cd ./Adafruit_Python_DHT && python3 setup.py install
-
-##docker run --privileged --env API_URL=192.168.5.199:5144  raspberry-hum-temp-agent:7
-
 
 ENTRYPOINT python3 get-humidity-temperature.py $API_URL $SENSOR_MODEL $GPIO_PIN $ROOM_NAME $INTERVAL_SEC
