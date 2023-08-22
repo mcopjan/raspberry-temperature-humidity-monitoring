@@ -6,18 +6,35 @@
              x:Class="TemperatureHumidityClient.MainPage">
 
 
+    
 
     <ContentPage.BindingContext>
         <vms:ViewModel>
 
         </vms:ViewModel>
     </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" HorizontalTextAlignment="Center">Temperature [C]</Label>
     <lvc:CartesianChart
-        Series="{Binding Series}" SyncContext="{Binding Sync}" XAxes="{Binding XAxes}">
+        Grid.Row="0"
+        Title="{Binding TempChartTitle}"
+        Series="{Binding TempSeries}" 
+        XAxes="{Binding XAxes}"
+        DrawMargin="{Binding DrawMargin}"
+        ZoomMode="X">
     </lvc:CartesianChart>
-    <!--<Button Text="Click to refresh"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Clicked="OnButtonClicked" />-->
-
+        <Label Grid.Row="1" HorizontalTextAlignment="Center">Humidity [%]</Label>
+    <lvc:CartesianChart 
+        Grid.Row="1"
+        Title="{Binding HumChartTitle}"
+        Series="{Binding HumSeries}" 
+        XAxes="{Binding XAxes}"
+        DrawMargin="{Binding DrawMargin}"
+        ZoomMode="X">
+    </lvc:CartesianChart>
+    </Grid>
 </ContentPage>

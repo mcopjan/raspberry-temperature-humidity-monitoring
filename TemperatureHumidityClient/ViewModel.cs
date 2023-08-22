@@ -1,8 +1,14 @@
 ﻿using System.Collections.ObjectModel;
+using System.Drawing;
+//using System.Drawing;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace TemperatureHumidityClient;
 
@@ -14,24 +20,35 @@ public partial class ViewModel
     public static string RoomName;
     public ViewModel()
     {
-        Series.Add(new ColumnSeries<DateTimePoint>
+        DrawMargin = new Margin(70, Margin.Auto, Margin.Auto, Margin.Auto);
+        TempChartTitle = "Temperature [C]";
+        HumChartTitle = "Humidity [%]";
+
+        TempSeries.Add(new ColumnSeries<DateTimePoint>
         {
             TooltipLabelFormatter = (chartPoint) =>$"{new DateTime((long) chartPoint.SecondaryValue):MMMM dd tt mm}: {chartPoint.PrimaryValue}",
             Values = temperatureData,
+            Fill = new SolidColorPaint(SKColors.IndianRed)
+
         });
 
-        /*
-        Series.Add(new ColumnSeries<DateTimePoint>
+
+        HumSeries.Add(new ColumnSeries<DateTimePoint>
         {
-            TooltipLabelFormatter = (chartPoint) => $"{new DateTime((long)chartPoint.SecondaryValue):MMMM dd}: {chartPoint.PrimaryValue}",
+            TooltipLabelFormatter = (chartPoint) => $"{new DateTime((long)chartPoint.SecondaryValue):MMMM dd tt mm}: {chartPoint.PrimaryValue}",
             Values = humidityData,
-        });*/
+            Fill = new SolidColorPaint(SKColors.DodgerBlue)
+        });
         FetchDataAsync();
     }
 
 
     public object Sync { get; } = new();
-    public List<ISeries> Series { get; set; } = new();
+    public List<ISeries> TempSeries { get; set; } = new();
+    public List<ISeries> HumSeries { get; set; } = new();
+    public Margin DrawMargin { get; set; }
+    public string TempChartTitle { get; set; }
+    public string HumChartTitle{ get; set; }
 
     async void FetchDataAsync()
     {
