@@ -1,0 +1,42 @@
+﻿<Window x:Class="Raspberry.Temperature.Humidity.WPF.Desktop.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client" 
+        xmlns:custom="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views" 
+        xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl" 
+        xmlns:models="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models" 
+        d:DataContext="{d:DesignInstance Type=models:MainWindowViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
+                <Menu DockPanel.Dock="Top" >
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_New Configuration" Command="{Binding ClickCommand}"/>
+                        <MenuItem Header="_Delete Configuration"/>
+                        <Separator />
+                        <MenuItem Header="_Exit"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+
+            <custom:RoomsListView Grid.Column="0" Grid.Row="1"/>
+
+        </Grid>
+    </ScrollViewer>
+</Window>
