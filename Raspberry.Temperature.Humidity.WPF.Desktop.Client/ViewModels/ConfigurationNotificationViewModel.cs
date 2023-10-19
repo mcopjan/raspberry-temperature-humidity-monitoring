@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,18 +16,20 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
     {
 		private string _configUrl;
         private bool _isOpened;
+        private const string ConfigFileName = "config.txt";
 
         private ICommand _clickCommand;
 
-        public Action CloseAction { get; set; }
+        public event EventHandler OnRequestClose;
 
         public ICommand ClickSaveCommand
         {
             get
             {
-                return _clickCommand ?? (_clickCommand = new CommandHandler(() => MyAction(), () => CanExecute));
+                return _clickCommand ?? (_clickCommand = new CommandHandler(() => OnSaveConfiguration(), () => CanExecute));
             }
         }
+
         public bool CanExecute
         {
             get
@@ -36,9 +39,20 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             }
         }
 
-        public void MyAction()
+        public void OnSaveConfiguration()
         {
             _store.Configuration = new Configuration() { ApiUrl = ConfigUrl };
+            SaveConfigurationUrlInFile();
+            OnRequestClose(this, new EventArgs());
+        }
+
+
+        private void SaveConfigurationUrlInFile()
+        {
+            if (!File.Exists(ConfigFileName)) 
+            {
+                File.WriteAllText(ConfigFileName, ConfigUrl);
+            }
         }
 
         public string ConfigUrl
@@ -55,20 +69,6 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             }
 		}
 
-        public bool IsOpen
-        {
-            get
-            {
-                return _isOpened;
-            }
-            set
-            {
-                _isOpened = value;
-                OnPropertyChanged(nameof(IsOpen));
-
-            }
-        }
-
         
 
         private ConfigurationStore _store;
@@ -78,8 +78,10 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
         public ConfigurationNotificationViewModel(ConfigurationStore store)
         {
             _store = store;
-            ConfigUrl = "192.168.5.136";
-
+            if (File.Exists(ConfigFileName))
+            {
+                ConfigUrl = File.ReadAllText(ConfigFileName);
+            }
         }
 
         

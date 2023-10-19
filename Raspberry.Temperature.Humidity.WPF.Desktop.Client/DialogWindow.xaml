@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client"
         mc:Ignorable="d"
-        Title="DialogWindow" Height="450" Width="800">
+        Title="DialogWindow" Height="300" Width="400">
     <Grid>
         
     </Grid>

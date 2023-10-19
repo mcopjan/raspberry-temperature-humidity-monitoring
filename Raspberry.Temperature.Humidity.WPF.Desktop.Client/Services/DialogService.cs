@@ -1,4 +1,5 @@
-﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views;
+﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,15 +47,15 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Services
 
         private static void ShowDialogInternal(Type viewType, Type viewModelType, Action<string> callback)
         {
-            var dialog = new DialogWindow();
+            var dialogWindow = new DialogWindow();
 
             EventHandler closeEventHandler = null;
             closeEventHandler = (s, e) =>
             {
-                callback(dialog.DialogResult.ToString());
-                dialog.Closed -= closeEventHandler;
+                callback(dialogWindow.DialogResult.ToString());
+                dialogWindow.Closed -= closeEventHandler;
             };
-            dialog.Closed += closeEventHandler;
+            dialogWindow.Closed += closeEventHandler;
 
             var content = Activator.CreateInstance(viewType);
             if (viewModelType != null)
@@ -63,6 +64,13 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Services
                 {
                     var ctorParams = _mappinngsParams[viewModelType];
                     var vmContent = Activator.CreateInstance(viewModelType, ctorParams);
+                    //this is dirty, I should perhaps check for metadata of a class and subscribe based on that, 
+                    //maybe have ICloseble and check if for that and then subscribe
+                    (vmContent as ConfigurationNotificationViewModel).OnRequestClose += (s, e) => 
+                    {
+                        dialogWindow.Close();
+                        dialogWindow.DataContext = null;
+                        };
                     (content as FrameworkElement).DataContext = vmContent;
                 }
                 else
@@ -73,8 +81,8 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Services
 
             }
             
-            dialog.Content = content;
-            dialog.ShowDialog();
+            dialogWindow.Content = content;
+            dialogWindow.ShowDialog();
         }
 
         

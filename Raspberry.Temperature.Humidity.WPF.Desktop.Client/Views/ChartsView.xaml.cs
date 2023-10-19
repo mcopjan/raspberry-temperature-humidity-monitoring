@@ -16,19 +16,13 @@ using System.Windows.Shapes;
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views
 {
     /// <summary>
-    /// Interaction logic for ConfigurationNotificationView.xaml
+    /// Interaction logic for ChartsView.xaml
     /// </summary>
-    public partial class ConfigurationNotificationView : UserControl
+    public partial class ChartsView : UserControl
     {
-        public ConfigurationNotificationView()
+        public ChartsView()
         {
             InitializeComponent();
         }
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var window = this.Parent as Window;
-        //    window.DialogResult = true;
-        //}
     }
 }

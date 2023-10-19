@@ -8,13 +8,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
 {
     public class RoomsListViewModel : ViewModelBase
     {
-        private ObservableCollection<Room> _availableRooms;
+        private ObservableCollection<Room> _availableRooms = new ObservableCollection<Room>();
         private ApiRepository _apiRepository;
+        private ICommand _getRoomStatsCommand;
 
         public ObservableCollection<Room> AvailableRooms
         {
@@ -25,16 +27,57 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             set
             {
                 _availableRooms = value;
+                AnyRoomsAvailable = true;
                 OnPropertyChanged(nameof(AvailableRooms));
             }
         }
 
 
+        private bool _anyRoomsAvailable;
+        public bool  AnyRoomsAvailable
+        {
+            get
+            {
+                return _anyRoomsAvailable;
+            }
+            set
+            {
+                _anyRoomsAvailable = value;
+                OnPropertyChanged(nameof(AnyRoomsAvailable));
+            }
+        }
 
-        public bool AnyRoomsAvailable => true;// _availableRooms.Count > 0;
+        
 
 
-   
+        public ICommand GetRoomStatsCommand
+        {
+            get
+            {
+                return _getRoomStatsCommand ?? (_getRoomStatsCommand = new CommandHandler(() => FetchRoomStats(), () => CanExecute));
+            }
+        }
+
+       
+
+        public bool CanExecute
+        {
+            get
+            {
+                // check if executing is allowed, i.e., validate, check if a process is running, etc. 
+                return true;
+            }
+        }
+
+        private void FetchRoomStats()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
 
         public RoomsListViewModel(ConfigurationStore store)
         {

@@ -27,8 +27,8 @@
             <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
                 <Menu DockPanel.Dock="Top" >
                     <MenuItem Header="_File">
-                        <MenuItem Header="_New Configuration" Command="{Binding ClickCommand}"/>
-                        <MenuItem Header="_Delete Configuration"/>
+                        <MenuItem Header="_New Configuration" Command="{Binding CommandAddConfiguration}"/>
+                        <MenuItem Header="_Delete Configuration" Command="{Binding CommandDeleteConfiguration}"/>
                         <Separator />
                         <MenuItem Header="_Exit"/>
                     </MenuItem>
@@ -36,6 +36,7 @@
             </DockPanel>
 
             <custom:RoomsListView Grid.Column="0" Grid.Row="1"/>
+            <custom:ChartsView Grid.Column="1" Grid.Row="1"/>
 
         </Grid>
     </ScrollViewer>
