@@ -1,94 +1,39 @@
-﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Services;
+﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels;
-using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        IDialogService _dialogService =  new DialogService();
-       // public AddConfigurationViewModel AddConfigurationModel { get; set; }
+        private readonly ModalNavigationStore _modalNavigationStore;
+        private readonly ConfigurationStore _configurationStore;
 
-        private RoomsListViewModel _roomsListViewModel;
-        public RoomsListViewModel RoomsListViewModel
-        {
-            get
-            {
-                return _roomsListViewModel;
-            }
-            set
-            {
-                _roomsListViewModel = value;
-                OnPropertyChanged(nameof(RoomsListViewModel));
-            }
-        }
-
+        public RoomsListViewModel RoomsListViewModel { get; }
         public ChartsViewModel ChartsViewModel { get; set; }
+        public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
+        public ICommand CommandAddConfiguration { get; }
+        public bool IsModalOpened => _modalNavigationStore.IsOpen;
 
-        private const string ConfigFileName = "config.txt";
-
-
-        private ConfigurationStore _store;
-        private ICommand _addConfigCommand;
-        private ICommand _deleteConfigCommand;
-        public ICommand CommandAddConfiguration
+        public MainWindowViewModel(ConfigurationStore configurationStore, ModalNavigationStore modalNavigationStore)
         {
-            get
-            {
-                return _addConfigCommand ?? (_addConfigCommand = new CommandHandler(() => OpenConfigNotification(), () => CanExecute));
-            }
-        }
-
-        public ICommand CommandDeleteConfiguration
-        {
-            get
-            {
-                return _deleteConfigCommand ?? (_deleteConfigCommand = new CommandHandler(() => DeleteConfigurationFile(), () => CanExecute));
-            }
-        }
-
-        public bool CanExecute
-        {
-            get
-            {
-                // check if executing is allowed, i.e., validate, check if a process is running, etc. 
-                return true;
-            }
-        }
-
-        public void OpenConfigNotification()
-        {
-            _dialogService.ShowDialog<ConfigurationNotificationViewModel>(result => {
-
-                var test = result;
-            });
-        }
-
-        public void DeleteConfigurationFile()
-        {
-            File.Delete(ConfigFileName);
-        }
-
-
-
-        public MainWindowViewModel(ConfigurationStore store)
-        {
-            _store = store;
-            RoomsListViewModel = new RoomsListViewModel(store);
-            ChartsViewModel = new ChartsViewModel(store);
-
-
+            _configurationStore = configurationStore;
+            _modalNavigationStore = modalNavigationStore;
+            RoomsListViewModel = new RoomsListViewModel(_configurationStore);
+            ChartsViewModel = new ChartsViewModel(_configurationStore);
+            CommandAddConfiguration = new AddConfigurationCommand(_modalNavigationStore,_configurationStore);
+            //
+            //._modalNavigationStore.CurrentViewModel = new ConfigurationNotificationViewModel(_configurationStore);
+            _modalNavigationStore.CurrentViewModelChanged += _modalNavigationStore_CurrentViewModelChanged;
 
         }
 
-
+        private void _modalNavigationStore_CurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentModalViewModel));
+            OnPropertyChanged(nameof(IsModalOpened));
+            
+        }
     }
 }

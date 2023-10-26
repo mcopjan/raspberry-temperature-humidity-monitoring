@@ -7,7 +7,6 @@
         xmlns:custom="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views" 
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl" 
         xmlns:models="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models" 
-        d:DataContext="{d:DesignInstance Type=models:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     
@@ -16,11 +15,11 @@
         <Grid>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -34,6 +33,16 @@
                     </MenuItem>
                 </Menu>
             </DockPanel>
+
+            <modalcontrol:Modal Panel.ZIndex="100" Grid.RowSpan="2" Grid.ColumnSpan="2" IsOpen="{Binding IsModalOpened}"  >
+                <ContentControl Content="{Binding CurrentModalViewModel}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type models:ConfigurationNotificationViewModel}">
+                            <custom:ConfigurationNotificationView MinWidth="400"/>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+            </modalcontrol:Modal>
 
             <custom:RoomsListView Grid.Column="0" Grid.Row="1"/>
             <custom:ChartsView Grid.Column="1" Grid.Row="1"/>

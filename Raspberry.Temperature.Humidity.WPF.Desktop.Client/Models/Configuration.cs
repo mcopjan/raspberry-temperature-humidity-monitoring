@@ -2,6 +2,6 @@
 {
     public class Configuration
     {
-        public string ApiUrl { get; set; }
+        public string ApiEndpointUrl { get; set; } = string.Empty;
     }
 }

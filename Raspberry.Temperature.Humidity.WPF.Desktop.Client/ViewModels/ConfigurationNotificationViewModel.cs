@@ -1,13 +1,7 @@
 ﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
@@ -22,38 +16,23 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
 
         public event EventHandler OnRequestClose;
 
-        public ICommand ClickSaveCommand
-        {
-            get
-            {
-                return _clickCommand ?? (_clickCommand = new CommandHandler(() => OnSaveConfiguration(), () => CanExecute));
-            }
-        }
+       
 
-        public bool CanExecute
-        {
-            get
-            {
-                // check if executing is allowed, i.e., validate, check if a process is running, etc. 
-                return true;
-            }
-        }
-
-        public void OnSaveConfiguration()
-        {
-            _store.Configuration = new Configuration() { ApiUrl = ConfigUrl };
-            SaveConfigurationUrlInFile();
-            OnRequestClose(this, new EventArgs());
-        }
+        //public void OnSaveConfiguration()
+        //{
+        //    _store.Configuration = new Configuration() { ApiEndpointUrl = ConfigUrl };
+        //    SaveConfigurationUrlInFile();
+        //    OnRequestClose(this, new EventArgs());
+        //}
 
 
-        private void SaveConfigurationUrlInFile()
-        {
-            if (!File.Exists(ConfigFileName)) 
-            {
-                File.WriteAllText(ConfigFileName, ConfigUrl);
-            }
-        }
+        //private void SaveConfigurationUrlInFile()
+        //{
+        //    if (!File.Exists(ConfigFileName)) 
+        //    {
+        //        File.WriteAllText(ConfigFileName, ConfigUrl);
+        //    }
+        //}
 
         public string ConfigUrl
 		{

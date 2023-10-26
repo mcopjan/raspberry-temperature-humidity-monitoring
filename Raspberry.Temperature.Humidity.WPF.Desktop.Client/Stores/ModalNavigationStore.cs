@@ -1,31 +1,34 @@
 ﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores
 {
     public class ModalNavigationStore
     {
-		private ViewModelBase _currentViewModel;
+        public event Action CurrentViewModelChanged;
+        private ViewModelBase _currentViewModel;
+		
+		
 		public ViewModelBase CurrentViewModel
 		{
-			get
-			{
-				return _currentViewModel;
-			}
-			set
+			get => _currentViewModel;
+            set
 			{
                 _currentViewModel = value;
-				CurrentViewModelChanged?.Invoke();
-
+				OnCurrentViewModelChanged();
             }
 		}
 
-		public bool IsOpen => _currentViewModel.IsOpen;
+        public bool IsOpen => _currentViewModel != null;
 
-        public event Action CurrentViewModelChanged;	
+        private void OnCurrentViewModelChanged()
+        {
+			CurrentViewModelChanged?.Invoke();
+        }
+
+		public void Close()
+		{
+			CurrentViewModel = null;
+		}
 	}
 }
