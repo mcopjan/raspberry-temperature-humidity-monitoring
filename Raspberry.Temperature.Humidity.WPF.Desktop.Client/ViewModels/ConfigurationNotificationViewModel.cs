@@ -10,10 +10,12 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
     public class ConfigurationNotificationViewModel : ViewModelBase
     {
 		private string _configUrl;
+        private bool? _isConnectionSuccessful;
         private bool _isOpened;
         private const string ConfigFileName = "config.txt";
 
         public ICommand SaveConfigurationCommand { get; }
+        public ICommand TestConnectionCommand { get; }
 
         public event EventHandler OnRequestClose;
 
@@ -38,6 +40,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
         //    }
         //}
 
+        
         public string ConfigUrl
 		{
 			get
@@ -52,6 +55,20 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             }
 		}
 
+        public bool? IsConnectionSuccessful => _configurationStore.IsConnectionSuccessful;
+        //{
+        //    get
+        //    {
+        //        return _isConnectionSuccessful;
+        //    }
+        //    set
+        //    {
+        //        _isConnectionSuccessful = value;
+        //        OnPropertyChanged(nameof(IsConnectionSuccessful));
+
+        //    }
+        //}
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public ConfigurationNotificationViewModel(ModalNavigationStore modalNavigationStore, ConfigurationStore configurationStore)
@@ -60,6 +77,9 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             _modalNavigationStore = modalNavigationStore;
             _configurationStore = configurationStore;
             SaveConfigurationCommand = new SaveConfigurationCommand(this, _modalNavigationStore, _configurationStore);
+            TestConnectionCommand = new TestConnectionCommandAsync(this, _configurationStore);
+
+            _configurationStore.TestConnectionResultChanged += _configurationStore_TestConnectionResultChanged;
 
             //if (File.Exists(ConfigFileName))
             //{
@@ -68,6 +88,9 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             //_configurationStore = configurationStore;
         }
 
-
+        private void _configurationStore_TestConnectionResultChanged(object? sender, bool? e)
+        {
+            OnPropertyChanged(nameof(IsConnectionSuccessful));
+        }
     }
 }

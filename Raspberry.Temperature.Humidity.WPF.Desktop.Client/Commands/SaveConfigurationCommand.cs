@@ -8,14 +8,6 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly ConfigurationStore _configurationStore;
         private ConfigurationNotificationViewModel _configurationNotificationViewModel;
-        private ModalNavigationStore modalNavigationStore;
-        private ConfigurationStore configurationStore;
-
-        public SaveConfigurationCommand(ModalNavigationStore modalNavigationStore, ConfigurationStore configurationStore)
-        {
-            _modalNavigationStore = modalNavigationStore;
-            _configurationStore= configurationStore;
-        }
 
         public SaveConfigurationCommand(ConfigurationNotificationViewModel configurationNotificationViewModel, ModalNavigationStore modalNavigationStore, ConfigurationStore configurationStore)
         {
@@ -26,7 +18,9 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
 
         public override void Execute(object? parameter)
         {
+            //this will close the modal
             _modalNavigationStore.CurrentViewModel = null;
+
             _configurationStore.Configuration = new Configuration() { ApiEndpointUrl = _configurationNotificationViewModel.ConfigUrl };
         }
     }

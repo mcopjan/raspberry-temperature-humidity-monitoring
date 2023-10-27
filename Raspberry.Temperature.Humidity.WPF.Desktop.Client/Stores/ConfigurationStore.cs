@@ -7,6 +7,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores
     public class ConfigurationStore
     {
         private Configuration _config;
+        private bool? _isConnectionSuccessful;
         public Configuration Configuration
         {
             get => _config;
@@ -18,6 +19,17 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores
             }
         }
 
-        public event EventHandler<ApiRepository> ConfigurationChanged;  
+        public bool? IsConnectionSuccessful
+        {
+            get => _isConnectionSuccessful;
+            set
+            {
+                _isConnectionSuccessful = value;
+                TestConnectionResultChanged?.Invoke(this, _isConnectionSuccessful);
+            }
+        }
+
+        public event EventHandler<ApiRepository> ConfigurationChanged;
+        public event EventHandler<bool?> TestConnectionResultChanged;
     }
 }
