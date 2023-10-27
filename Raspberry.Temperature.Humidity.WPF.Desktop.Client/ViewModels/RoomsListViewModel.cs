@@ -1,14 +1,17 @@
-﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories;
+﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
 {
     public class RoomsListViewModel : ViewModelBase
     {
         private ObservableCollection<Room> _availableRooms = new ObservableCollection<Room>();
-        private ApiRepository _apiRepository;
+
+        public ICommand OnRoomNameButtonCommand { get;}
 
         public ObservableCollection<Room> AvailableRooms
         {
@@ -42,14 +45,13 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
 
         public RoomsListViewModel(ConfigurationStore store)
         {
-            
-            store.ConfigurationChanged += Store_ConfigurationChanged1;
+            OnRoomNameButtonCommand = new OnRoomNameButtonCommand(store);
+            store.ConfigurationChanged += Store_ConfigurationChanged;
         }
 
-        private async void Store_ConfigurationChanged1(object? sender, Configuration e)
+        private async void Store_ConfigurationChanged(object? sender, ApiRepository e)
         {
-            _apiRepository = new ApiRepository(e.ApiEndpointUrl);
-            var rooms = await _apiRepository.GetRoomNames();
+            var rooms = await e.GetRoomNames();
             AvailableRooms = new ObservableCollection<Room>(rooms.Select(s => new Room { Name = s }));
         }
 

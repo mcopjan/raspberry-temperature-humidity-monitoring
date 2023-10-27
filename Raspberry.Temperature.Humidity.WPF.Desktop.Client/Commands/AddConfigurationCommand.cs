@@ -16,7 +16,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
 
         public override void Execute(object? parameter)
         {
-            _modalNavigationStore.CurrentViewModel = new ConfigurationNotificationViewModel(_configurationStore);
+            _modalNavigationStore.CurrentViewModel = new ConfigurationNotificationViewModel(_modalNavigationStore, _configurationStore);
         }
     }
 }

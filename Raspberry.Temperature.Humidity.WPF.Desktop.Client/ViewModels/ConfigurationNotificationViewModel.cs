@@ -1,4 +1,5 @@
-﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
+﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -12,11 +13,14 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
         private bool _isOpened;
         private const string ConfigFileName = "config.txt";
 
-        private ICommand _clickCommand;
+        public ICommand SaveConfigurationCommand { get; }
 
         public event EventHandler OnRequestClose;
 
-       
+        private readonly ModalNavigationStore _modalNavigationStore;
+        private readonly ConfigurationStore _configurationStore;
+
+
 
         //public void OnSaveConfiguration()
         //{
@@ -48,21 +52,22 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             }
 		}
 
-        
-
-        private ConfigurationStore _store;
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public ConfigurationNotificationViewModel(ConfigurationStore store)
+        public ConfigurationNotificationViewModel(ModalNavigationStore modalNavigationStore, ConfigurationStore configurationStore)
         {
-            _store = store;
-            if (File.Exists(ConfigFileName))
-            {
-                ConfigUrl = File.ReadAllText(ConfigFileName);
-            }
+            _configUrl = "192.168.5.136";
+            _modalNavigationStore = modalNavigationStore;
+            _configurationStore = configurationStore;
+            SaveConfigurationCommand = new SaveConfigurationCommand(this, _modalNavigationStore, _configurationStore);
+
+            //if (File.Exists(ConfigFileName))
+            //{
+            //    ConfigUrl = File.ReadAllText(ConfigFileName);
+            //}
+            //_configurationStore = configurationStore;
         }
 
-        
+
     }
 }

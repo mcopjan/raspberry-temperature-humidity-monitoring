@@ -1,9 +1,6 @@
 ﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores
 {
@@ -16,10 +13,11 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores
             set
             {
                 _config = value;
-                ConfigurationChanged?.Invoke(this,_config);
+                ApiRepository apiRepository = new ApiRepository(_config.ApiEndpointUrl);
+                ConfigurationChanged?.Invoke(this, apiRepository);
             }
         }
 
-        public event EventHandler<Configuration> ConfigurationChanged;  
+        public event EventHandler<ApiRepository> ConfigurationChanged;  
     }
 }

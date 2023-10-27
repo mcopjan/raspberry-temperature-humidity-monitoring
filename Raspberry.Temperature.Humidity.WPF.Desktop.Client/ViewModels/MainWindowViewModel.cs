@@ -23,8 +23,6 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models
             RoomsListViewModel = new RoomsListViewModel(_configurationStore);
             ChartsViewModel = new ChartsViewModel(_configurationStore);
             CommandAddConfiguration = new AddConfigurationCommand(_modalNavigationStore,_configurationStore);
-            //
-            //._modalNavigationStore.CurrentViewModel = new ConfigurationNotificationViewModel(_configurationStore);
             _modalNavigationStore.CurrentViewModelChanged += _modalNavigationStore_CurrentViewModelChanged;
 
         }
