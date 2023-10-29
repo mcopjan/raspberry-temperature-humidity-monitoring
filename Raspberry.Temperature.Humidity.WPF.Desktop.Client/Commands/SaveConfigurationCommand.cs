@@ -1,4 +1,5 @@
 ﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
@@ -21,7 +22,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
             //this will close the modal
             _modalNavigationStore.CurrentViewModel = null;
 
-            _configurationStore.Configuration = new Configuration() { ApiEndpointUrl = _configurationNotificationViewModel.ConfigUrl };
+            _configurationStore.ApiRepository = new ApiRepository(_configurationNotificationViewModel.ConfigUrl);
         }
     }
 }

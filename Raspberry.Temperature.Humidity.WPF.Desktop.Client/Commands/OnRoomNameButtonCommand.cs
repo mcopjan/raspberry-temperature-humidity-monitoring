@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows.Documents;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
 {
-    public class OnRoomNameButtonCommand : BaseCommand
+    public class OnRoomNameButtonCommand : BaseCommandAsync
     {
 
         private readonly ConfigurationStore _configurationStore;
@@ -15,9 +18,12 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
             _configurationStore = configurationStore;
         }
 
-        public override void Execute(object? parameter)
+        public override async Task<List<RoomStats>> ExecuteAsync(object parameter)
         {
-            Console.WriteLine(((Room)parameter).Name);
+            string roomName = (((Room)parameter).Name);
+            var result = await _configurationStore.ApiRepository.GetRoomStats(roomName);
+            _configurationStore.RoomsData = result.ToArray();
+            return result;
         }
     }
 }
