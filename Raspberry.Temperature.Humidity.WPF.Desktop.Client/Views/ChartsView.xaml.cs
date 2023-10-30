@@ -23,6 +23,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Views
         public ChartsView()
         {
             InitializeComponent();
+
         }
     }
 }
