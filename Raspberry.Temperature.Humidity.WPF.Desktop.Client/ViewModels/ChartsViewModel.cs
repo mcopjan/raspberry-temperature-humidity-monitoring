@@ -1,5 +1,4 @@
 ﻿using LiveCharts;
-using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
@@ -13,10 +12,26 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
     public class ChartsViewModel : ViewModelBase
     {
         private ConfigurationStore _configurationStore;
-        private ObservableCollection<RoomStats> _roomStats;
         private SeriesCollection _series;
+        private string _selectedDateRange;
         private List<DateTime> customXAxisLabels;
         private double _yaxisMax;
+
+        public ObservableCollection<string> DateRangeItems { get; }
+
+        public string SelectedDateRange
+        {
+            get
+            {
+                return _selectedDateRange;
+            }
+            set
+            {
+                _selectedDateRange = value;
+                OnPropertyChanged(nameof(SelectedDateRange));
+            }
+        }
+
 
         public SeriesCollection Series
         {
@@ -60,13 +75,15 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
             YAxisMax = 100;
             _configurationStore = store;
             _configurationStore.OnRoomStatsUpdated += _configurationStore_OnRoomStatsUpdated;
+            DateRangeItems = new ObservableCollection<string>() { "Today", "Last 7 Days", "Last Month", "This Year" };
+            SelectedDateRange = DateRangeItems.First();
         }
 
 
         private void _configurationStore_OnRoomStatsUpdated(object? sender, RoomStats[] e)
         {
-            var samples = e.OrderByDescending(d => d.CreatedAt).Take(1000).OrderBy(d => d.CreatedAt).ToList();
-            AdjustYAxisMaxValue(samples);
+            var samples = e.OrderByDescending(d => d.CreatedAt).Take(50).OrderBy(d => d.CreatedAt).ToList();
+            //AdjustYAxisMaxValue(samples);
 
             Series = new SeriesCollection()
             {
@@ -74,6 +91,14 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
                 {
                     Title = "Temperature [C]",
                     Values = new ChartValues<double>(samples.Select(roomStat => (double)roomStat.Temperature)),
+                    PointGeometry = DefaultGeometries.Circle,
+                    PointGeometrySize = 10, // Set the size of the points
+                    ScalesXAt = 0// This specifies the X-axis to use, 0 means the first X-axis
+                },
+                new LineSeries
+                {
+                    Title = "Humidity [%]",
+                    Values = new ChartValues<double>(samples.Select(roomStat => (double)roomStat.Humidity)),
                     PointGeometry = DefaultGeometries.Circle,
                     PointGeometrySize = 10, // Set the size of the points
                     ScalesXAt = 0// This specifies the X-axis to use, 0 means the first X-axis

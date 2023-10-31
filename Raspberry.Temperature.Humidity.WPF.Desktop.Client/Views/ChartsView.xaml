@@ -8,9 +8,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding ChartsViewModel}">
     <Grid>
-        <lvc:CartesianChart Series="{Binding Series}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ComboBox Grid.Row="0" Name="comboBox1" HorizontalAlignment="Right" Margin="0,0,10,0"
+            ItemsSource="{Binding DateRangeItems}"
+            SelectedValue="{Binding SelectedDateRange, Mode=TwoWay}"
+            Text="Date Range"
+            IsEditable="true"
+            IsReadOnly="true"/>
+        <lvc:CartesianChart Grid.Row="1" Series="{Binding Series}" >
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Temperature [C]" MaxValue="{Binding YAxisMax}" MinValue="0" FontWeight="Bold" >
+                <lvc:Axis MaxValue="100" MinValue="0" FontWeight="Bold" >
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
             
