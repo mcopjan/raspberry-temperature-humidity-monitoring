@@ -16,6 +16,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
         private string _selectedDateRange;
         private List<DateTime> customXAxisLabels;
         private double _yaxisMax;
+        private List<RoomStats> _roomStats;
 
         public ObservableCollection<string> DateRangeItems { get; }
 
@@ -29,6 +30,7 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
             {
                 _selectedDateRange = value;
                 OnPropertyChanged(nameof(SelectedDateRange));
+                if (_roomStats != null) { RenderChart(); }
             }
         }
 
@@ -75,39 +77,112 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
             YAxisMax = 100;
             _configurationStore = store;
             _configurationStore.OnRoomStatsUpdated += _configurationStore_OnRoomStatsUpdated;
-            DateRangeItems = new ObservableCollection<string>() { "Today", "Last 7 Days", "Last Month", "This Year" };
+            DateRangeItems = new ObservableCollection<string>() { "Last Hour","Today", "Last 7 Days", "Last Month", "This Year" };
             SelectedDateRange = DateRangeItems.First();
         }
 
 
         private void _configurationStore_OnRoomStatsUpdated(object? sender, RoomStats[] e)
         {
-            var samples = e.OrderByDescending(d => d.CreatedAt).Take(50).OrderBy(d => d.CreatedAt).ToList();
-            //AdjustYAxisMaxValue(samples);
+            _roomStats = e.ToList();
+            SelectedDateRange = DateRangeItems.First();
+            RenderChart();
+        }
+
+        private void RenderChart()
+        {
+            List<RoomStats> filteredStats = new List<RoomStats>();
+            bool displayWithAnimation = false;
+            if (SelectedDateRange.Equals("Last Hour")) //change into enum
+            {
+                displayWithAnimation = true;
+                filteredStats.AddRange(_roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromHours(1)).OrderBy(d => d.CreatedAt).ToList());
+            }
+            else if (SelectedDateRange.Equals("Today"))
+            {
+                //there can be max 1440 samples a day, still ok to render 
+                filteredStats.AddRange(_roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(1)).OrderBy(d => d.CreatedAt).ToList());
+            }
+            else if (SelectedDateRange.Equals("Last 7 Days"))
+            {
+                // LiveChart does not perform very well with a lot of samples, if we collected 1 minutes, we would have to render around 10000 points. We will average values every 15 mins 
+                var numberOfSamplesIn7days = _roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(7)).ToList();
+
+                var averagedStats = _roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(7))
+                    .GroupBy(stats => new DateTime(stats.CreatedAt.Year, stats.CreatedAt.Month, stats.CreatedAt.Day, stats.CreatedAt.Hour, stats.CreatedAt.Minute / 15 * 15, 0))
+                    .Select(group => new RoomStats
+                    {
+                        CreatedAt = group.Key,
+                        Temperature = (long)group.Average(stats => stats.Temperature),
+                        Humidity = (long)group.Average(stats => stats.Humidity),
+                        TemperatureUnit = group.First().TemperatureUnit,
+                        RoomName = group.First().RoomName,
+                    })
+                    .OrderBy(d => d.CreatedAt)
+                    .ToList();
+                filteredStats.AddRange(averagedStats);
+            }
+            else if (SelectedDateRange.Equals("Last Month"))
+            {
+
+                var samplesCount = _roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(30)).ToList();
+
+                //30mins averages
+                var averagedStats = _roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(30))
+                    .GroupBy(stats => new DateTime(stats.CreatedAt.Year, stats.CreatedAt.Month, stats.CreatedAt.Day, stats.CreatedAt.Hour, stats.CreatedAt.Minute / 30 * 30, 0))
+                    .Select(group => new RoomStats
+                    {
+                        CreatedAt = group.Key,
+                        Temperature = (long)group.Average(stats => stats.Temperature),
+                        Humidity = (long)group.Average(stats => stats.Humidity),
+                        TemperatureUnit = group.First().TemperatureUnit,
+                        RoomName = group.First().RoomName,
+                    })
+                    .OrderBy(d => d.CreatedAt)
+                    .ToList();
+                filteredStats.AddRange(averagedStats);
+            }
+            else if (SelectedDateRange.Equals("This Year"))
+            {
+                var samplesCount = _roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(365)).ToList();
+
+                //60mins averages
+                var averagedStats = _roomStats.Where(s => s.CreatedAt > DateTime.Now - TimeSpan.FromDays(365))
+                    .GroupBy(stats => new DateTime(stats.CreatedAt.Year, stats.CreatedAt.Month, stats.CreatedAt.Day, stats.CreatedAt.Hour, stats.CreatedAt.Minute / 60 * 60, 0))
+                    .Select(group => new RoomStats
+                    {
+                        CreatedAt = group.Key,
+                        Temperature = (long)group.Average(stats => stats.Temperature),
+                        Humidity = (long)group.Average(stats => stats.Humidity),
+                        TemperatureUnit = group.First().TemperatureUnit,
+                        RoomName = group.First().RoomName,
+                    })
+                    .OrderBy(d => d.CreatedAt)
+                    .ToList();
+                filteredStats.AddRange(averagedStats);
+            }
 
             Series = new SeriesCollection()
             {
                 new LineSeries
                 {
                     Title = "Temperature [C]",
-                    Values = new ChartValues<double>(samples.Select(roomStat => (double)roomStat.Temperature)),
-                    PointGeometry = DefaultGeometries.Circle,
+                    Values = new ChartValues<double>(filteredStats.Select(roomStat => (double)roomStat.Temperature)),
+                    PointGeometry = displayWithAnimation ? DefaultGeometries.Circle : null,
                     PointGeometrySize = 10, // Set the size of the points
                     ScalesXAt = 0// This specifies the X-axis to use, 0 means the first X-axis
                 },
                 new LineSeries
                 {
                     Title = "Humidity [%]",
-                    Values = new ChartValues<double>(samples.Select(roomStat => (double)roomStat.Humidity)),
-                    PointGeometry = DefaultGeometries.Circle,
+                    Values = new ChartValues<double>(filteredStats.Select(roomStat => (double)roomStat.Humidity)),
+                    PointGeometry = displayWithAnimation ? DefaultGeometries.Circle : null,
                     PointGeometrySize = 10, // Set the size of the points
                     ScalesXAt = 0// This specifies the X-axis to use, 0 means the first X-axis
                 }
             };
 
-            CustomXAxisLabels = samples.Select(s => s.CreatedAt).ToList();
-
-
+            CustomXAxisLabels = filteredStats.Select(s => s.CreatedAt).ToList();
         }
 
         private void AdjustYAxisMaxValue(List<RoomStats> samples)
