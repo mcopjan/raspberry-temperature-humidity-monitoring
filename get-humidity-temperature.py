@@ -13,7 +13,7 @@ intervalInSec = sys.argv[5]
 
 while True:
     try:
-        humidity, temperature = Adafruit_DHT.read_retry(int(11),int(17))
+        humidity, temperature = Adafruit_DHT.read_retry(int(sensor),int(pin))
         print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
         myobj = {
                   "roomName": roomName,
