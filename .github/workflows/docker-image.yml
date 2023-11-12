@@ -21,7 +21,7 @@ jobs:
         
     - uses: actions/checkout@v3
     - name: Build & Push Agent Docker image
-      run: docker buildx build --file Dockerfile_Raspberry_Agent --platform linux/arm/v6,linux/arm/v7 -t mcopjan/raspberry-hum-temp-agent:latest -t mcopjan/raspberry-hum-temp-agent:${{env.GITHUB_RUN_NUMBER}} --push .
+      run: docker buildx build --file Dockerfile_Raspberry_Agent --platform linux/arm/v6,linux/arm/v7 -t mcopjan/raspberry-hum-temp-agent:latest -t mcopjan/raspberry-hum-temp-agent:${{github.run_number}} --push .
       
     - uses: actions/checkout@v3
     - name: Build the Api Docker image
