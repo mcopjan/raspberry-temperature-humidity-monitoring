@@ -20,15 +20,12 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - uses: actions/checkout@v3
-    - name: Build the Raspberry Agent Docker image
-      run: docker buildx build --file Dockerfile_Raspberry_Agent --platform linux/arm/v6,linux/arm/v7 -t mcopjan/raspberry-hum-temp-agent:latest --push .
+    - name: Build & Push Agent Docker image
+      run: docker buildx build --file Dockerfile_Raspberry_Agent --platform linux/arm/v6,linux/arm/v7 -t mcopjan/raspberry-hum-temp-agent:latest -t mcopjan/raspberry-hum-temp-agent:$env:GITHUB_RUN_NUMBER --push .
       
     - uses: actions/checkout@v3
     - name: Build the Api Docker image
       run: docker build . --file Dockerfile_Api --tag mcopjan/raspberry-hum-temp-api:latest
-        
-    - name: Push the Agent Docker Image
-      run: docker push mcopjan/raspberry-hum-temp-agent:latest
-      
+
     - name: Push the Api Docker Image
       run: docker push mcopjan/raspberry-hum-temp-api:latest
