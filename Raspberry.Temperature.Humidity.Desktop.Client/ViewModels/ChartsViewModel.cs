@@ -167,16 +167,18 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.ViewModels
                 new LineSeries
                 {
                     Title = "Temperature [C]",
-                    Values = new ChartValues<double>(filteredStats.Select(roomStat => (double)roomStat.Temperature)),
+                    Values = new ChartValues<float>(filteredStats.Select(roomStat => (float)roomStat.Temperature)),
                     PointGeometry = displayWithAnimation ? DefaultGeometries.Circle : null,
+                    LabelPoint = point => $"{point.Y:0.00}",
                     PointGeometrySize = 10, // Set the size of the points
                     ScalesXAt = 0// This specifies the X-axis to use, 0 means the first X-axis
                 },
                 new LineSeries
                 {
                     Title = "Humidity [%]",
-                    Values = new ChartValues<double>(filteredStats.Select(roomStat => (double)roomStat.Humidity)),
+                    Values = new ChartValues<float>(filteredStats.Select(roomStat => (float)roomStat.Humidity)),
                     PointGeometry = displayWithAnimation ? DefaultGeometries.Circle : null,
+                    LabelPoint = point => $"{point.Y:0.00}",
                     PointGeometrySize = 10, // Set the size of the points
                     ScalesXAt = 0// This specifies the X-axis to use, 0 means the first X-axis
                 }

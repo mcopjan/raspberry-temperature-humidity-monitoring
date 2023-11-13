@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33801.306
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaspberryTemperatureHumidityApi", "RaspberryTemperatureHumidityApi\RaspberryTemperatureHumidityApi.csproj", "{EF66967B-C94D-46BB-9108-A8E02B8DA053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raspberry.Temperature.Humidity.Api", "Raspberry.Temperature.Humidity.Api\Raspberry.Temperature.Humidity.Api.csproj", "{EF66967B-C94D-46BB-9108-A8E02B8DA053}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureHumidityClient", "TemperatureHumidityClient\TemperatureHumidityClient.csproj", "{868A4BF8-758C-4AAE-BC3A-06F083093E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raspberry.Temperature.Humidity.Mobile.Client", "Raspberry.Temperature.Humidity.Mobile.Client\Raspberry.Temperature.Humidity.Mobile.Client.csproj", "{868A4BF8-758C-4AAE-BC3A-06F083093E53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raspberry.Temperature.Humidity.WPF.Desktop.Client", "Raspberry.Temperature.Humidity.WPF.Desktop.Client\Raspberry.Temperature.Humidity.WPF.Desktop.Client.csproj", "{F9FD50BB-5612-4266-83E5-63783862C9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raspberry.Temperature.Humidity.Desktop.Client", "Raspberry.Temperature.Humidity.Desktop.Client\Raspberry.Temperature.Humidity.Desktop.Client.csproj", "{F9FD50BB-5612-4266-83E5-63783862C9DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

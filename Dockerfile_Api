@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 WORKDIR /src
-COPY ["RaspberryTemperatureHumidityApi/RaspberryTemperatureHumidityApi.csproj", "RaspberryTemperatureHumidityApi/"]
-RUN dotnet restore "RaspberryTemperatureHumidityApi/RaspberryTemperatureHumidityApi.csproj"
+COPY ["Raspberry.Temperature.Humidity.Api/Raspberry.Temperature.Humidity.Api.csproj", "Raspberry.Temperature.Humidity.Api/"]
+RUN dotnet restore "Raspberry.Temperature.Humidity.Api/Raspberry.Temperature.Humidity.Api.csproj"
 COPY . .
-WORKDIR "/src/RaspberryTemperatureHumidityApi"
-RUN dotnet build "RaspberryTemperatureHumidityApi.csproj" -c Release -o /app/build
+WORKDIR "/src/Raspberry.Temperature.Humidity.Api"
+RUN dotnet build "Raspberry.Temperature.Humidity.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RaspberryTemperatureHumidityApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Raspberry.Temperature.Humidity.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RaspberryTemperatureHumidityApi.dll"]
+ENTRYPOINT ["dotnet", "Raspberry.Temperature.Humidity.Api.dll"]
