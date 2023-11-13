@@ -6,6 +6,7 @@ on:
     paths:
       - 'RaspberryTemperatureHumidityApi/**'
       - 'Dockerfile_Api'
+      - '/.github/workflows/docker-publish-api.yml'
     
 
 jobs:
