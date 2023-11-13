@@ -5,13 +5,14 @@ on:
     branches: [ "master" ]
     paths:
       - 'RaspberryTemperatureHumidityApi/**'
+      - 'Dockerfile_Api'
     
 
 jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
     - name: Login to Docker Hub
@@ -19,13 +20,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
+
     - uses: actions/checkout@v3
-    - name: Build the Api Docker image
-      run: docker build . --file Dockerfile_Api -t mcopjan/raspberry-hum-temp-api:latest -t mcopjan/raspberry-hum-temp-api:${{github.run_number}}
-
-    - name: Push the Api Docker Image
-      run: docker push mcopjan/raspberry-hum-temp-api:latest
-
-    - name: Push the Api Docker Image
-      run: docker push mcopjan/raspberry-hum-temp-api:${{github.run_number}} 
+    - name: Build & Push API Docker image
+      run: docker buildx build --file Dockerfile_Api --platform linux/arm/v6,linux/arm/v7 -t mcopjan/raspberry-hum-temp-api:latest -t mcopjan/raspberry-hum-temp-api:${{github.run_number}} --push .
