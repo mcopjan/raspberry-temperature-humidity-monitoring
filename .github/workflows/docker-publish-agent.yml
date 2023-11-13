@@ -6,6 +6,7 @@ on:
     paths:
       - 'get-humidity-temperature.py'
       - 'Dockerfile_Raspberry_Agent'
+      - '.github/workflows/docker-publish-agent.yml'
     
 
 jobs:
