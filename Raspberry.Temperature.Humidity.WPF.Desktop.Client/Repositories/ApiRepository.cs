@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
+using System.Threading;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories
 {
@@ -35,6 +34,23 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories
             var result = JsonConvert.DeserializeObject<List<RoomStats>>(response);
             return result;
 
+        }
+
+        public async Task<bool> IsApiEndpontAvailableAsync()
+        {
+            try
+            {
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(2));
+                var response = await _client.GetAsync($"http://{_apiUrl}/hello/", cts.Token);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
@@ -20,16 +20,9 @@ namespace Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
-            bool result = await PingAsync(_configurationNotificationViewModel.ConfigUrl);
+            var apiRepository = new ApiRepository(_configurationNotificationViewModel.ConfigUrl);
+            bool result = await apiRepository.IsApiEndpontAvailableAsync();
             _configurationStore.IsConnectionSuccessful = result;
-        }
-
-        private async Task<bool> PingAsync(string hostUrl)
-        {
-            Ping ping = new Ping();
-
-            PingReply result = await ping.SendPingAsync(hostUrl,1000);
-            return result.Status == IPStatus.Success;
         }
     }
 }
