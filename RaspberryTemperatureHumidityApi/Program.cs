@@ -53,7 +53,6 @@ app.MapPost("/roomstats", async ([FromBody] RoomStats stats) =>
 })
 .WithName("PostRoomStats");
 
-// simple healthcheck
 app.MapGet("/hello", async context =>
 {
     context.Response.StatusCode = 200;
