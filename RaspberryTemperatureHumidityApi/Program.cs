@@ -53,4 +53,12 @@ app.MapPost("/roomstats", async ([FromBody] RoomStats stats) =>
 })
 .WithName("PostRoomStats");
 
+// simple healthcheck
+app.MapGet("/hello", async context =>
+{
+    context.Response.StatusCode = 200;
+    await context.Response.WriteAsync("Api is up and running.");
+})
+.WithName("Hello");
+
 app.Run();
