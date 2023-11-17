@@ -4,7 +4,7 @@
 version: "3"
 services:
   raspberry-hum-temp-api:
-    image: mcopjan/raspberry-hum-temp-api:latest
+    image: mcopjan/raspberry-hum-temp-api:7
     container_name: raspberry-hum-temp-api
     ports:
       - "80:80"
@@ -15,16 +15,16 @@ services:
       - rpi-network
 
   raspberry-humidity-temperature-agent:
-    image: mcopjan/raspberry-hum-temp-agent:latest
+    image: mcopjan/raspberry-hum-temp-agent:37
     container_name: raspberry-hum-temp-agent
     privileged: true
     depends_on:
       - raspberry-hum-temp-api
     environment:
       - API_URL=raspberry-hum-temp-api:80
-      - SENSOR_MODEL=11
+      - SENSOR_MODEL=22
       - GPIO_PIN=17
-      - ROOM_NAME=demoRoom
+      - ROOM_NAME=eden
       - INTERVAL_SEC= 60
    networks:
       - rpi-network
