@@ -28,9 +28,10 @@ internal class Program
         ConcurrentBag<string> RoomNames = new ConcurrentBag<string>();
 
 
-        app.MapGet("/roomstats/{roomName}", (string roomName) =>
+        app.MapGet("/roomstats/{roomName}", async (string roomName) =>
         {
-            var roomStats = FileRepository.ReadRoomsStatsFromFile();
+            
+            var roomStats = await MongoDbRepository.GetData(roomName);
             return roomStats.Where(r => r.RoomName.Equals(roomName)).ToList();
         });
 
@@ -39,7 +40,7 @@ internal class Program
             return RoomNames.ToList();
         });
 
-        app.MapPost("/roomstats", ([FromBody] RoomStats stats) =>
+        app.MapPost("/roomstats", async ([FromBody] RoomStats stats) =>
         {
             try
             {
@@ -47,7 +48,8 @@ internal class Program
                     RoomNames.Add(stats.RoomName);
 
                 stats.CreatedAt = DateTime.Now;
-                FileRepository.WriteRoomStatsIntoFile(stats);
+                //FileRepository.WriteRoomStatsIntoFile(stats);
+                await MongoDbRepository.StoreData(stats,stats.RoomName);
                 Results.Ok(stats);
             }
             catch (Exception)
