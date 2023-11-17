@@ -13,11 +13,11 @@ namespace Raspberry.Temperature.Humidity.Api.Repository
 
         static MongoDbRepository()
         {
-            _client = new MongoClient(connectionString);
             string mongoHost = Environment.GetEnvironmentVariable("MONGO_HOST") ?? "localhost";
             string mongoPortStr = Environment.GetEnvironmentVariable("MONGO_PORT") ?? "27017";
             Console.WriteLine($"Mongo host set to {mongoHost} and mongo port to {mongoPortStr}");
             connectionString = $"mongodb://{mongoHost}:{mongoPortStr}";
+            _client = new MongoClient(connectionString);
         }
 
 
