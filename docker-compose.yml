@@ -4,16 +4,15 @@
 version: "3"
 services:
   raspberry-hum-temp-api:
-    image: mcopjan/raspberry-hum-temp-api:7
+    image: mcopjan/raspberry-hum-temp-api:10
     container_name: raspberry-hum-temp-api
     ports:
-      - "80:80"
+      - 80:80
     environment:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
-   networks:
+    networks:
       - rpi-network
-
   raspberry-humidity-temperature-agent:
     image: mcopjan/raspberry-hum-temp-agent:37
     container_name: raspberry-hum-temp-agent
@@ -25,16 +24,18 @@ services:
       - SENSOR_MODEL=22
       - GPIO_PIN=17
       - ROOM_NAME=eden
-      - INTERVAL_SEC= 60
-   networks:
+      - INTERVAL_SEC=60
+    networks:
       - rpi-network
-
   mongo-db:
     image: nonoroazoro/rpi-mongo:latest
     container_name: mongodb
     depends_on:
       - raspberry-hum-temp-api
     ports:
-      - "27017:27017"
+      - 27017:27017
     networks:
       - rpi-network
+networks:
+  rpi-network:
+    driver: bridge
