@@ -32,6 +32,8 @@ services:
     container_name: mongodb
     depends_on:
       - raspberry-hum-temp-api
+    volumes:
+      - /var/rpi-data/:/data/db
     ports:
       - 27017:27017
     networks:
