@@ -8,6 +8,7 @@
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl" 
         xmlns:models="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models" 
         mc:Ignorable="d"
+        Icon="Assets/temperature-icon.png"
         Title="Temperature and Humidity monitoring" Height="450" Width="800">
     
 
@@ -29,7 +30,7 @@
                         <MenuItem Header="_New Configuration" Command="{Binding CommandAddConfiguration}"/>
                         <MenuItem Header="_Delete Configuration" Command="{Binding CommandDeleteConfiguration}"/>
                         <Separator />
-                        <MenuItem Header="_Exit"/>
+                        <MenuItem Header="_Exit" Command="{Binding CommandExit}"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>

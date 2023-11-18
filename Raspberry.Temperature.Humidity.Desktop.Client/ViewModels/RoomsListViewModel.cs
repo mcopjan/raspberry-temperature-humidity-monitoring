@@ -1,7 +1,9 @@
-﻿using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands;
+﻿using Raspberry.Temperature.Humidity.Desktop.Client.Misc;
+using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Commands;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Repositories;
 using Raspberry.Temperature.Humidity.WPF.Desktop.Client.Stores;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 

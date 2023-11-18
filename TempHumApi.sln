@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raspberry.Temperature.Humid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raspberry.Temperature.Humidity.Desktop.Client", "Raspberry.Temperature.Humidity.Desktop.Client\Raspberry.Temperature.Humidity.Desktop.Client.csproj", "{F9FD50BB-5612-4266-83E5-63783862C9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MariDbTest", "MariDbTest\MariDbTest.csproj", "{BC9B8E6E-42BE-46B4-9938-00045C522CA1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,14 +45,6 @@ Global
 		{F9FD50BB-5612-4266-83E5-63783862C9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F9FD50BB-5612-4266-83E5-63783862C9DD}.Release|x64.ActiveCfg = Release|Any CPU
 		{F9FD50BB-5612-4266-83E5-63783862C9DD}.Release|x64.Build.0 = Release|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Debug|x64.Build.0 = Debug|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Release|x64.ActiveCfg = Release|Any CPU
-		{BC9B8E6E-42BE-46B4-9938-00045C522CA1}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
