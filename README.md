@@ -47,3 +47,9 @@ The easiest way to set up this solution is as follows:
    - If monitoring multiple rooms (using additional Raspberry Pi's with DHT sensors), run another Agent and connect it to send data to the API. For example:
    ```bash
    docker run --privileged -e API_URL={API_IP}:80 -e ROOM_NAME=demo_room -e SENSOR_MODEL=22 -e GPIO_PIN=17 -e INTERVAL_SEC=60 mcopjan/raspberry-hum-temp-agent:latest
+
+## Demo
+<video width="320" height="240" controls>
+  <source src="(/Doc_Images/19.11.2023_18.34.05_REC.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
