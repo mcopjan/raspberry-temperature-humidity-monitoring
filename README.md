@@ -18,6 +18,8 @@
 
 ### Setup
  - The easiest way is to
+     - Connect DHT sensor to Raspberry PI GPIO ![GPIO](/Doc_Images/Raspberry-Pi-GPIO-Header-with-Photo.png?raw=true "GPIO")
+        - In my case  power to pins 2&6 and signal one into pin 11 (GPIO17)![GPIO2](/Doc_Images/20231119_173254.jpg?raw=true "GPIO2") 
      - Install docker
      - Run docker 'compose -f [docker-compose.yml](https://github.com/mcopjan/raspberry-temperature-humidity-monitoring/blob/master/docker-compose.yml) up' This will spin up API, Agent and DB
     - In case of monitoring multiple rooms (having another Raspberry Pi's with DHT sensors connected) you need run another agent and connect it set it up to send data to API. e.g.
