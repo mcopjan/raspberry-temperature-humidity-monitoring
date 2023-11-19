@@ -7,7 +7,7 @@
     - [MongoDB](https://hub.docker.com/r/nonoroazoro/rpi-mongo)
   - Desktop Client - WPF application presenting temperature & humidity data [netcore 6.0 runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) needed
   - Mobile Client - MAUI app, still in developmnent
-   ![Component's diagram](Diagram1.png?raw=true "Diagram")
+   ![Component's diagram](/Doc_Images/raspberry-temp-hum-diagram.png?raw=true "Diagram")
 ### Sensors compatible with this solution
  - DHT11 (tested but not recommended as humidity is not very precise, off by 20-25%)
  - DHT22 <img src="https://www.iconsdb.com/icons/preview/green/checkmark-xxl.png" width="20">
