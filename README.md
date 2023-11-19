@@ -49,4 +49,4 @@ The easiest way to set up this solution is as follows:
    docker run --privileged -e API_URL={API_IP}:80 -e ROOM_NAME=demo_room -e SENSOR_MODEL=22 -e GPIO_PIN=17 -e INTERVAL_SEC=60 mcopjan/raspberry-hum-temp-agent:latest
 
 ## Demo
-<iframe src="https://vimeo.com/manage/videos/886174353" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+![Video Demo](/Doc_Images/demo.gif)
