@@ -20,7 +20,7 @@ This solution comprises four main components:
 This solution is compatible with the following sensors:
 
 - **DHT11**: Tested but not recommended due to imprecise humidity readings (off by 20-25%).
-- **DHT22** ![Checkmark](https://www.iconsdb.com/icons/preview/green/checkmark-xxl.png) 
+- **DHT22** <img src="https://www.iconsdb.com/icons/preview/green/checkmark-xxl.png" width="20"> 
 
 ## Requirements
 
@@ -41,7 +41,7 @@ The easiest way to set up this solution is as follows:
 2. **Install Docker.**
 
 3. **Run Docker Compose:**
-   - Execute `docker-compose -f [docker-compose.yml](https://github.com/mcopjan/raspberry-temperature-humidity-monitoring/blob/master/docker-compose.yml) up`. This will spin up the API, Agent, and DB.
+   - Execute 'docker-compose -f [docker-compose.yml](https://github.com/mcopjan/raspberry-temperature-humidity-monitoring/blob/master/docker-compose.yml) up'. This will spin up the API, Agent, and DB.
 
 4. **Monitoring Multiple Rooms:**
    - If monitoring multiple rooms (using additional Raspberry Pi's with DHT sensors), run another Agent and connect it to send data to the API. For example:
