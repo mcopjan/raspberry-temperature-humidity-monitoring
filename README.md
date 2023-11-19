@@ -10,7 +10,7 @@
    ![Component's diagram](Diagram1.png?raw=true "Diagram")
 ### Sensors compatible with this solution
  - DHT11 (tested but not recommended as humidity is not very precise, off by 20-25%)
- - DHT22 ![ico](https://www.iconsdb.com/icons/preview/green/checkmark-xxl.png =20x20) 
+ - DHT22 ![](https://www.iconsdb.com/icons/preview/green/checkmark-xxl.png=20x)
 
 ### What do you need?
  - Raspberry Pi (I am using Pi3 & Zero, one hosting API ,Agent & DB and the other only Agent)
