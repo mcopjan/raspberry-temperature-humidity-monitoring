@@ -9,7 +9,10 @@
         xmlns:models="clr-namespace:Raspberry.Temperature.Humidity.WPF.Desktop.Client.Models" 
         mc:Ignorable="d"
         Icon="Assets/temperature-icon.png"
-        Title="Temperature and Humidity monitoring" Height="450" Width="800">
+        Title="Temperature and Humidity monitoring" 
+        Height="450" 
+        Width="800"
+        WindowStartupLocation="CenterScreen">
     
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
