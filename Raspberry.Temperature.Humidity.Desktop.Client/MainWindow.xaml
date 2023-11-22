@@ -12,45 +12,46 @@
         Title="Temperature and Humidity monitoring" 
         Height="450" 
         Width="800"
-        WindowStartupLocation="CenterScreen">
-    
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Grid>
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <Border CornerRadius="10"                    
+            BorderThickness="1">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
 
-            <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
-                <Menu DockPanel.Dock="Top" >
-                    <MenuItem Header="_File">
-                        <MenuItem Header="_New Configuration" Command="{Binding CommandAddConfiguration}"/>
-                        <MenuItem Header="_Delete Configuration" Command="{Binding CommandDeleteConfiguration}"/>
-                        <Separator />
-                        <MenuItem Header="_Exit" Command="{Binding CommandExit}"/>
-                    </MenuItem>
-                </Menu>
-            </DockPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
 
-            <modalcontrol:Modal Panel.ZIndex="100" Grid.RowSpan="2" Grid.ColumnSpan="2" IsOpen="{Binding IsModalOpened}"  >
-                <ContentControl Content="{Binding CurrentModalViewModel}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type models:ConfigurationNotificationViewModel}">
-                            <custom:ConfigurationNotificationView MinWidth="400"/>
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </modalcontrol:Modal>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <custom:RoomsListView Grid.Column="0" Grid.Row="1"/>
-            <custom:ChartsView Grid.Column="1" Grid.Row="1"/>
+                <modalcontrol:Modal Panel.ZIndex="100" Grid.RowSpan="2" Grid.ColumnSpan="2" IsOpen="{Binding IsModalOpened}"  >
+                    <ContentControl Content="{Binding CurrentModalViewModel}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type models:ConfigurationNotificationViewModel}">
+                                <custom:ConfigurationNotificationView MinWidth="400"/>
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </modalcontrol:Modal>
 
-        </Grid>
-    </ScrollViewer>
+                <custom:RoomsListView Grid.Column="0" Grid.Row="1"/>
+                <custom:ChartsView Grid.Column="1" Grid.Row="1"/>
+
+            </Grid>
+        </ScrollViewer>
+    </Border>
 </Window>
