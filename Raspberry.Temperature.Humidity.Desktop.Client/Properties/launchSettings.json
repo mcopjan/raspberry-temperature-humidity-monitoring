@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Raspberry.Temperature.Humidity.Desktop.Client": {
+      "commandName": "Project"
+    }
+  }
+}
