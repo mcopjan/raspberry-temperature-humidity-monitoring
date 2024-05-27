@@ -1,0 +1,20 @@
+FROM python:3.8-alpine
+WORKDIR app
+EXPOSE 5000
+
+
+ENV SENSOR_MODEL=22
+ENV GPIO_PIN=17
+
+COPY ./sensor-server.py .
+RUN apk update && apk add bash && apk add --no-cache git && apk add python3-dev \
+                        gcc \
+                        libc-dev
+
+RUN pip3 install flask                        
+                            
+RUN git clone https://github.com/adafruit/Adafruit_Python_DHT.git                                             
+RUN cd ./Adafruit_Python_DHT && python3 setup.py install
+
+ENTRYPOINT python3 sensor-server.py $SENSOR_MODEL $GPIO_PIN
+
